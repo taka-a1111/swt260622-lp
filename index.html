@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大学・紀要／論文管理｜サイエンスウェブ株式会社</title>
+<meta name="description" content="2007年から研究者に信頼されて、学会・大学・科研費をサポート。大学・紀要／論文管理システムをスタンダードプラン30万円・3週間納品・スマホ対応でご提供します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#15315B;
+  --navy-deep:#0F2545;
+  --blue:#23538F;
+  --blue-soft:#3E6FB0;
+  --ink:#1E2A37;
+  --slate:#5A6675;
+  --slate-light:#8A93A0;
+  --line:#E3E8EF;
+  --line-soft:#EEF2F7;
+  --paper:#FFFFFF;
+  --mist:#F6F8FB;
+  --mist-2:#EEF3F9;
+  --accent:#9A7B3F;
+  --accent-soft:#F2ECDF;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:118px}
+body{
+  font-family:'Noto Sans JP',system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.85;
+  overflow-x:hidden;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  letter-spacing:.01em;
+}
+.mincho{font-family:'Shippori Mincho',serif;}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.eyebrow{
+  font-size:.78rem;letter-spacing:.22em;font-weight:700;
+  color:var(--blue);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--blue);display:inline-block}
+.sec-head{margin-bottom:48px}
+.sec-title{
+  font-size:2rem;font-weight:700;color:var(--navy);line-height:1.45;
+  letter-spacing:.02em;
+}
+.sec-lead{margin-top:16px;color:var(--slate);font-size:1.02rem;max-width:640px}
+
+/* ===== fixed topbar wrapper ===== */
+.topbar{position:fixed;top:0;left:0;width:100%;z-index:100}
+
+/* ===== demo bar ===== */
+.demo-bar{
+  background:var(--navy-deep);color:#C7D4E6;text-align:center;
+  font-size:.74rem;letter-spacing:.06em;padding:7px 16px;font-weight:500;line-height:1.4;
+}
+
+/* ===== header ===== */
+.site-header{
+  position:relative;width:100%;
+  background:rgba(255,255,255,.0);
+  transition:background .35s ease,box-shadow .35s ease,border-color .35s;
+  border-bottom:1px solid transparent;
+}
+.site-header.scrolled{
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(8px);
+  box-shadow:0 1px 0 rgba(21,49,91,.06);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  max-width:1180px;margin:0 auto;padding:0 24px;
+  height:74px;display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:12px;color:#fff;transition:color .35s}
+.site-header.scrolled .logo{color:var(--navy)}
+.logo-mark{
+  width:40px;height:40px;border-radius:7px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue),var(--navy));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px rgba(21,49,91,.25);
+}
+.logo-mark svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.6}
+.logo-text{line-height:1.25}
+.logo-text b{font-family:'Shippori Mincho',serif;font-size:1.12rem;font-weight:700;display:block;letter-spacing:.04em}
+.logo-text span{font-size:.64rem;letter-spacing:.18em;opacity:.7;font-weight:500}
+.nav{display:flex;align-items:center;gap:26px}
+.nav a{
+  font-size:.9rem;font-weight:500;color:#E8EEF6;transition:color .25s;position:relative;
+}
+.site-header.scrolled .nav a{color:var(--slate)}
+.nav a:hover{color:#fff}
+.site-header.scrolled .nav a:hover{color:var(--blue)}
+.header-cta{
+  background:#fff;color:var(--navy)!important;
+  padding:10px 22px;border-radius:4px;font-size:.86rem;font-weight:700;
+  letter-spacing:.04em;transition:transform .25s,box-shadow .25s,background .25s,color .25s;
+  border:1px solid transparent;
+}
+.site-header.scrolled .header-cta{background:var(--navy);color:#fff!important}
+.header-cta:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(21,49,91,.22)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;width:30px;height:30px}
+.nav-toggle span{display:block;height:2px;background:#fff;margin:6px 0;transition:.3s;border-radius:2px}
+.site-header.scrolled .nav-toggle span{background:var(--navy)}
+
+/* ===== hero ===== */
+.hero{
+  position:relative;min-height:100vh;display:flex;align-items:center;
+  background:
+    radial-gradient(120% 90% at 85% 10%,rgba(62,111,176,.35),transparent 55%),
+    linear-gradient(150deg,var(--navy) 0%,var(--navy-deep) 70%);
+  color:#fff;overflow:hidden;padding:140px 0 70px;
+}
+.hero-grid-bg{position:absolute;inset:0;opacity:.5;pointer-events:none}
+.hero-inner{
+  position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 24px;
+  display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center;width:100%;
+}
+.hero-eyebrow{
+  font-size:.82rem;letter-spacing:.04em;color:#BFD2EC;font-weight:500;
+  border-left:3px solid var(--blue-soft);padding-left:14px;margin-bottom:26px;line-height:1.7;
+}
+.hero h1{
+  font-family:'Shippori Mincho',serif;font-weight:700;
+  font-size:3.3rem;line-height:1.3;letter-spacing:.03em;margin-bottom:22px;
+}
+.hero h1 .sub{display:block;font-size:1.05rem;font-weight:500;color:#A8C0E0;letter-spacing:.1em;margin-top:14px;font-family:'Noto Sans JP',sans-serif}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:14px;margin-bottom:30px;
+  font-size:1rem;color:#DCE7F4;flex-wrap:wrap;
+}
+.hero-tag .plan-badge{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);
+  padding:6px 16px;border-radius:40px;font-size:.84rem;font-weight:600;letter-spacing:.04em;
+}
+.hero-feats{
+  list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:11px 26px;margin-bottom:32px;
+}
+.hero-feats li{
+  display:flex;align-items:flex-start;gap:9px;font-size:.92rem;color:#E4EBF5;line-height:1.6;
+}
+.hero-feats svg{width:16px;height:16px;stroke:var(--blue-soft);fill:none;stroke-width:2;flex-shrink:0;margin-top:5px}
+.hero-price{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
+  border-radius:8px;padding:16px 22px;margin-bottom:28px;font-weight:600;
+  font-size:1.04rem;letter-spacing:.02em;
+}
+.hero-price b{color:#fff;font-size:1.18rem}
+.hero-cta-row{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#fff;color:var(--navy);padding:15px 34px;border-radius:5px;
+  font-weight:700;font-size:1rem;letter-spacing:.04em;
+  transition:transform .25s,box-shadow .25s;box-shadow:0 8px 24px rgba(0,0,0,.18);
+}
+.btn-primary svg{width:18px;height:18px;stroke:var(--navy);fill:none;stroke-width:1.8}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.26)}
+
+/* hero visual */
+.hero-visual{position:relative}
+.hero-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);
+  border-radius:14px;padding:26px;backdrop-filter:blur(4px);
+  box-shadow:0 30px 60px rgba(0,0,0,.3);
+}
+.hero-card-top{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.hero-card-top i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.25);display:block}
+.hero-card-top span{margin-left:auto;font-size:.72rem;letter-spacing:.14em;color:#9FB4D2}
+.hc-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.hc-row:last-child{border-bottom:none}
+.hc-ico{width:38px;height:38px;border-radius:8px;background:rgba(62,111,176,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hc-ico svg{width:19px;height:19px;stroke:#A8C6EC;fill:none;stroke-width:1.6}
+.hc-txt b{display:block;font-size:.9rem;color:#EAF1FA;font-weight:600}
+.hc-txt small{font-size:.76rem;color:#9FB4D2}
+.hero-est{
+  margin-top:14px;background:linear-gradient(135deg,var(--accent),#7d6230);
+  color:#fff;border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;
+}
+.hero-est small{font-size:.74rem;letter-spacing:.1em;opacity:.85;display:block}
+.hero-est b{font-family:'Shippori Mincho',serif;font-size:1.5rem;letter-spacing:.02em}
+
+/* ===== section base ===== */
+section{padding:96px 0}
+.bg-mist{background:var(--mist)}
+
+/* plan */
+.plan-card{
+  background:var(--paper);border:1px solid var(--line);border-radius:14px;
+  overflow:hidden;box-shadow:0 6px 28px rgba(21,49,91,.05);
+}
+.plan-head{
+  background:linear-gradient(135deg,var(--navy),var(--navy-deep));color:#fff;
+  padding:34px 38px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;
+}
+.plan-head h3{font-family:'Shippori Mincho',serif;font-size:1.5rem;font-weight:700;letter-spacing:.03em}
+.plan-head .ph-tag{font-size:.82rem;color:#BFD2EC;margin-top:6px;letter-spacing:.04em}
+.plan-head .ph-price{text-align:right}
+.plan-head .ph-price b{font-family:'Shippori Mincho',serif;font-size:2.1rem;display:block;line-height:1.1}
+.plan-head .ph-price small{font-size:.78rem;color:#BFD2EC}
+.plan-body{padding:38px}
+.block-label{
+  font-size:1.02rem;font-weight:700;color:var(--navy);margin-bottom:18px;
+  display:flex;align-items:center;gap:10px;
+}
+.block-label svg{width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:1.8}
+.spec-list{list-style:none;margin-bottom:36px;border-top:1px solid var(--line)}
+.spec-list li{
+  display:grid;grid-template-columns:230px 1fr;gap:20px;padding:14px 4px;
+  border-bottom:1px solid var(--line);align-items:baseline;
+}
+.spec-list li b{font-weight:600;color:var(--ink);font-size:.96rem}
+.spec-list li span{color:var(--slate);font-size:.94rem}
+.note-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--mist-2);border-radius:8px;padding:14px 20px;margin-bottom:36px;
+  font-size:.94rem;
+}
+.note-row b{color:var(--ink);font-weight:600}
+.note-row span{color:var(--slate)}
+.addon-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.addon{
+  border:1px solid var(--line);border-radius:10px;padding:20px 22px;
+  transition:border-color .25s,box-shadow .25s,transform .25s;background:var(--paper);
+}
+.addon:hover{border-color:var(--blue-soft);box-shadow:0 8px 22px rgba(21,49,91,.08);transform:translateY(-2px)}
+.addon-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:8px}
+.addon-top b{font-size:1rem;color:var(--navy);font-weight:700}
+.addon-top .price{font-family:'Shippori Mincho',serif;font-size:1.18rem;color:var(--accent);font-weight:700;white-space:nowrap}
+.addon p{font-size:.86rem;color:var(--slate);line-height:1.7}
+
+/* link rows */
+.link-rows{margin:30px 0 8px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.link-row{
+  display:flex;align-items:center;gap:16px;padding:18px 22px;
+  border-bottom:1px solid var(--line);transition:background .2s;
+}
+.link-row:last-child{border-bottom:none}
+.link-row:hover{background:var(--mist)}
+.link-row .lr-label{font-weight:600;color:var(--ink);font-size:.94rem;min-width:170px}
+.link-row .lr-act{margin-left:auto;display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-weight:600;font-size:.9rem}
+.link-row .lr-act svg{width:16px;height:16px;stroke:var(--blue);fill:none;stroke-width:1.8}
+
+/* cta strip */
+.cta-center{text-align:center;margin-top:44px}
+.btn-navy{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--navy);color:#fff;padding:16px 44px;border-radius:5px;
+  font-weight:700;font-size:1.02rem;letter-spacing:.05em;
+  transition:transform .25s,box-shadow .25s,background .25s;
+}
+.btn-navy svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.8}
+.btn-navy:hover{background:var(--blue);transform:translateY(-2px);box-shadow:0 10px 26px rgba(21,49,91,.28)}
+
+/* hoshu */
+.hoshu-price{
+  display:inline-flex;align-items:baseline;gap:10px;margin:6px 0 30px;
+}
+.hoshu-price b{font-family:'Shippori Mincho',serif;font-size:2.2rem;color:var(--navy)}
+.hoshu-price span{color:var(--slate);font-size:.92rem}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-bottom:30px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:28px}
+.panel.excl{background:var(--mist)}
+.excl-list{list-style:none}
+.excl-list li{display:flex;gap:10px;padding:8px 0;font-size:.92rem;color:var(--slate);align-items:flex-start}
+.excl-list li svg{width:16px;height:16px;stroke:var(--slate-light);fill:none;stroke-width:2;flex-shrink:0;margin-top:6px}
+
+/* why / works */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.why-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:30px}
+.why-card h4{font-size:1.08rem;color:var(--navy);font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.why-card h4 svg{width:22px;height:22px;stroke:var(--blue);fill:none;stroke-width:1.7}
+.why-item{padding:12px 0;border-top:1px solid var(--line-soft)}
+.why-item:first-of-type{border-top:none}
+.why-item b{display:block;color:var(--ink);font-size:.96rem;font-weight:600;margin-bottom:2px}
+.why-item span{color:var(--slate);font-size:.9rem}
+
+.works-list{display:grid;gap:18px}
+.work-row{
+  display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:center;
+  background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 30px;
+}
+.work-row .wr-cat{display:flex;align-items:center;gap:12px;font-weight:700;color:var(--navy);font-size:1rem}
+.work-row .wr-cat svg{width:24px;height:24px;stroke:var(--blue);fill:none;stroke-width:1.6;flex-shrink:0}
+.work-row .wr-names{color:var(--slate);font-size:.94rem;line-height:1.8}
+
+/* company */
+.company-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.info-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:30px}
+.info-card .ic-label{
+  font-size:.78rem;letter-spacing:.14em;color:var(--blue);font-weight:700;margin-bottom:14px;text-transform:uppercase;
+}
+.info-card h4{font-family:'Shippori Mincho',serif;font-size:1.2rem;color:var(--navy);margin-bottom:10px;font-weight:700}
+.info-card p,.info-card a.line{color:var(--slate);font-size:.92rem;line-height:1.9;display:block}
+.info-card a.line:hover{color:var(--blue)}
+.info-card.span2{grid-column:1/-1}
+.biz-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:6px}
+.biz-cols h5{font-size:.9rem;color:var(--navy);font-weight:700;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.biz-cols ul{list-style:none}
+.biz-cols li{font-size:.86rem;padding:5px 0;color:var(--slate)}
+.biz-cols li a{color:var(--slate)}
+.biz-cols li a:hover{color:var(--blue)}
+.biz-cols li b{color:var(--ink);font-weight:600}
+
+/* contact / footer */
+.contact{
+  background:linear-gradient(150deg,var(--navy),var(--navy-deep));color:#fff;padding:90px 0;
+}
+.contact .sec-title{color:#fff}
+.contact-eyebrow{color:#BFD2EC}
+.contact-eyebrow::before{background:var(--blue-soft)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px}
+.contact-card{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+  border-radius:12px;padding:30px;display:flex;align-items:center;gap:20px;
+}
+.contact-card .cc-ico{
+  width:54px;height:54px;border-radius:11px;flex-shrink:0;
+  background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;
+}
+.contact-card .cc-ico svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:1.5}
+.contact-card small{display:block;font-size:.76rem;color:#A8C0E0;letter-spacing:.08em;margin-bottom:4px}
+.contact-card .cc-main{font-family:'Shippori Mincho',serif;font-size:1.5rem;font-weight:700;letter-spacing:.02em;color:#fff}
+.contact-card .cc-main.mail{font-size:1.05rem;word-break:break-all;font-family:'Noto Sans JP',sans-serif}
+.contact-card .cc-sub{font-size:.84rem;color:#C7D4E6;margin-top:4px}
+.sys-banner{
+  margin-top:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+  border-radius:12px;padding:24px 30px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+}
+.sys-banner b{font-size:1.05rem;color:#fff}
+.sys-banner a{display:inline-flex;align-items:center;gap:8px;color:#BFD2EC;font-weight:600;font-size:.9rem}
+.sys-banner a svg{width:16px;height:16px;stroke:#BFD2EC;fill:none;stroke-width:1.8}
+
+footer{background:var(--navy-deep);color:#9FB0C8;padding:34px 0;font-size:.82rem}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.footer-inner .f-logo{font-family:'Shippori Mincho',serif;color:#fff;font-size:1rem;letter-spacing:.04em}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* responsive */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:40px}
+  .hero-visual{max-width:440px}
+  .why-grid,.company-grid,.two-col{grid-template-columns:1fr}
+  .biz-cols{grid-template-columns:1fr}
+  .addon-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .nav{
+    position:fixed;top:0;right:-100%;height:100vh;width:74%;max-width:320px;
+    background:var(--navy);flex-direction:column;align-items:flex-start;
+    padding:100px 34px 40px;gap:8px;transition:right .35s ease;box-shadow:-10px 0 40px rgba(0,0,0,.3);
+  }
+  .nav.open{right:0}
+  .nav a{color:#E8EEF6!important;padding:12px 0;width:100%;border-bottom:1px solid rgba(255,255,255,.08);font-size:1rem}
+  .site-header.scrolled .nav a{color:#E8EEF6!important}
+  .header-cta{background:#fff;color:var(--navy)!important;margin-top:16px;border:none;width:100%;justify-content:center}
+  .site-header.scrolled .header-cta{background:#fff;color:var(--navy)!important}
+  .nav-toggle{display:block;z-index:101}
+  .nav-toggle.active span:nth-child(1){transform:translateY(8px) rotate(45deg);background:#fff}
+  .nav-toggle.active span:nth-child(2){opacity:0}
+  .nav-toggle.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg);background:#fff}
+  .hero h1{font-size:2.4rem}
+  .hero{padding-top:128px}
+  .hero-feats{grid-template-columns:1fr}
+  .sec-title{font-size:1.6rem}
+  section{padding:68px 0}
+  .plan-body,.plan-head{padding:26px 22px}
+  .spec-list li{grid-template-columns:1fr;gap:2px;padding:12px 4px}
+  .work-row{grid-template-columns:1fr;gap:12px}
+  .contact-card{flex-direction:column;text-align:center;align-items:center}
+}
+@media(max-width:480px){
+  .wrap{padding:0 18px}
+  .hero h1{font-size:2rem}
+  .hero-est b{font-size:1.25rem}
+  .plan-head .ph-price b{font-size:1.7rem}
+  .btn-navy,.btn-primary{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+<div class="demo-bar">初校確認用デモ表示｜最終版では本バー・仮素材を差し替え／削除します</div>
+
+<!-- HEADER -->
+<header class="site-header" id="header">
+  <div class="header-inner">
+    <a href="#top" class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M12 3l9 4-9 4-9-4 9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="logo-text"><b>サイエンスウェブ</b><span>SCIENCE WEB CO., LTD.</span></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="グローバルナビゲーション">
+      <a href="#top">トップ</a>
+      <a href="#plan">開発費</a>
+      <a href="#plan">基本プラン</a>
+      <a href="#hoshu">保守管理</a>
+      <a href="#why">今すぐ</a>
+      <a href="#works">実績</a>
+      <a href="#company">会社案内</a>
+      <a href="#contact" class="header-cta">まずは相談する</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-controls="nav" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <svg class="hero-grid-bg" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+        <path d="M44 0H0V44" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+      </pattern>
+    </defs>
+    <rect width="1440" height="800" fill="url(#grid)"/>
+    <polyline points="0,560 240,520 480,540 720,440 960,470 1200,360 1440,400" fill="none" stroke="rgba(120,165,220,.18)" stroke-width="2"/>
+    <polyline points="0,640 240,610 480,620 720,560 960,580 1200,500 1440,520" fill="none" stroke="rgba(120,165,220,.1)" stroke-width="2"/>
+  </svg>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-eyebrow">2007年から研究者に信頼されて、<br>学会・大学・科研費をサポート。</p>
+      <h1 class="mincho">大学・紀要／論文管理<span class="sub">30万円 査読機能なし｜スタンダードプラン</span></h1>
+      <div class="hero-tag">
+        <span class="plan-badge">迅速３週間納品</span>
+        <span class="plan-badge">低予算</span>
+        <span class="plan-badge">スマホ対応</span>
+        <span style="color:#A8C0E0;font-size:.9rem">サイエンスウェブ株式会社</span>
+      </div>
+      <ul class="hero-feats">
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>明確な仕様・単一価格</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>追加請求なし（アドオン可）</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>大学ドメイン／外部サーバー対応</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>スマホから紀要原稿を投稿</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>オンラインで紀要原稿を一元管理</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>３週間にて活用開始</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>公開後も保守契約で安定運用</li>
+      </ul>
+      <div class="hero-price">ジャスト<b>30万円！</b>　入稿完了から３週間にて活用開始！</div>
+      <div class="hero-cta-row">
+        <a href="#contact" class="btn-primary">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none"/><path d="M22 6l-10 7L2 6"/></svg>まずは相談する
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="hero-card">
+        <div class="hero-card-top"><i></i><i></i><i></i><span>大学・紀要／論文管理</span></div>
+        <div class="hc-row">
+          <span class="hc-ico"><svg viewBox="0 0 24 24"><path d="M4 4h12l4 4v12H4z"/><path d="M16 4v4h4"/></svg></span>
+          <span class="hc-txt"><b>紀要原稿の投稿</b><small>スマホ・PCから受付</small></span>
+        </div>
+        <div class="hc-row">
+          <span class="hc-ico"><svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg></span>
+          <span class="hc-txt"><b>原稿の一元管理</b><small>投稿者マイページ・管理者ページ</small></span>
+        </div>
+        <div class="hc-row">
+          <span class="hc-ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg></span>
+          <span class="hc-txt"><b>大学ドメイン／外部サーバー</b><small>移設にも対応</small></span>
+        </div>
+        <div class="hero-est">
+          <div><small>STANDARD PLAN</small>開発費</div>
+          <b>¥300,000</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLAN / 開発費 -->
+<section id="plan">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Standard Plan</p>
+      <h2 class="sec-title">開発費30万円　査読機能なし　スタンダードプラン</h2>
+    </div>
+    <div class="plan-card reveal">
+      <div class="plan-head">
+        <div>
+          <h3 class="mincho">スタンダードプラン</h3>
+          <p class="ph-tag">大学・紀要／論文管理｜査読機能なし</p>
+        </div>
+        <div class="ph-price"><b>30万円</b><small>（消費税10％別）</small></div>
+      </div>
+      <div class="plan-body">
+        <p class="block-label">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+          次を含みます。
+        </p>
+        <ul class="spec-list">
+          <li><b>・ドメイン登録料</b><span>本年度３月末まで有効</span></li>
+          <li><b>・サーバー利用料</b><span>本年度３月末まで有効</span></li>
+          <li><b>・紀要投稿利用数</b><span>100人／年以内</span></li>
+          <li><b>・編集機能</b><span>投稿者マイページ・管理者ページ</span></li>
+          <li><b>・スマホに最適化</b><span>レスポンシブ対応です。</span></li>
+          <li><b>・Zoom相談</b><span>月２回まで可能です。</span></li>
+        </ul>
+
+        <p class="block-label">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+          次は含まれません。
+        </p>
+        <div class="note-row"><b>・消費税</b><span>10％</span></div>
+
+        <p class="block-label">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          アドオンとして追加可能です。
+        </p>
+        <div class="addon-grid">
+          <div class="addon">
+            <div class="addon-top"><b>・査読アプリ</b><span class="price">70,000円／年</span></div>
+            <p>査読依頼、査読結果の回収、採否管理をオンラインで行います。</p>
+          </div>
+          <div class="addon">
+            <div class="addon-top"><b>・保守管理契約</b><span class="price">10,000円／月</span></div>
+            <p>サーバー管理、バックアップ、SSL更新、障害対応など公開後の運用をサポートします。</p>
+          </div>
+          <div class="addon">
+            <div class="addon-top"><b>・ファイルアップロード</b><span class="price">10万円／件</span></div>
+            <p>Word、Excel、PDF、PowerPointなどの添付ファイル投稿に対応します。</p>
+          </div>
+          <div class="addon">
+            <div class="addon-top"><b>・紀要管理</b><span class="price">10万円／件</span></div>
+            <p>（巻号管理・発行年月管理・バックナンバー公開・PDFダウンロード）複数の紀要を管理し、バックナンバーとして公開できます。</p>
+          </div>
+          <div class="addon">
+            <div class="addon-top"><b>・執筆者・原稿情報を検索</b><span class="price">10万円／件</span></div>
+            <p>執筆者名、所属、キーワードなどで原稿を検索・抽出できます。</p>
+          </div>
+        </div>
+
+        <div class="link-rows">
+          <a class="link-row" href="https://science-web.tokyo/ronbun/2026request.form/" target="_blank" rel="noopener">
+            <span class="lr-label">概算見積書ご希望は</span>
+            <span class="lr-act">ダウンロード（SWT見積書）<svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg></span>
+          </a>
+          <a class="link-row" href="https://science-web.tokyo/ronbun/2026order.form/" target="_blank" rel="noopener">
+            <span class="lr-label">ご発注依頼フォームは</span>
+            <span class="lr-act">仕様書の確認（SWT発注依頼）<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="cta-center reveal">
+      <a href="#contact" class="btn-navy">
+        <svg viewBox="0 0 24 24"><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z" fill="none"/></svg>まずは相談する
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 保守管理 -->
+<section id="hoshu" class="bg-mist">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Maintenance</p>
+      <h2 class="sec-title">保守管理の業務は、</h2>
+      <p class="sec-lead">大学・紀要／論文管理を安全かつ安定的に継続運用するためのサービスです。</p>
+      <div class="hoshu-price"><b>10,000円／月</b><span>一括払い。</span></div>
+    </div>
+
+    <div class="panel reveal" style="margin-bottom:26px">
+      <p class="block-label">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3 3 4-1-1 4 3 3-3 3 1 4-4-1-3 3-3-3-4 1 1-4-3-3 3-3-1-4 4 1z"/></svg>
+        業務内容は、
+      </p>
+      <ul class="spec-list" style="margin-bottom:0">
+        <li><b>・サーバー・ドメイン管理</b><span>月1回まで</span></li>
+        <li><b>・ＳＳＬ証明書の更新</b><span>年1回まで</span></li>
+        <li><b>・サーバーバックアップ</b><span>月２回まで</span></li>
+        <li><b>・障害対応</b><span>月２件まで（一次対応＋復旧支援）</span></li>
+        <li><b>・運用とセキュリティ助言</b><span>月２回まで（各1時間以内）</span></li>
+      </ul>
+    </div>
+
+    <div class="two-col">
+      <div class="panel excl reveal">
+        <p class="block-label"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>次は含まれません。</p>
+        <ul class="excl-list">
+          <li><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg>機器購入、機器修理、機器交換、機器設置、機器設定など。</li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg>データ入力、大規模リニューアル、構造変更、コンテンツ制作など。</li>
+        </ul>
+      </div>
+      <div class="panel reveal">
+        <p class="block-label"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>アドオンとして追加可能です。</p>
+        <div class="addon" style="margin-bottom:14px">
+          <div class="addon-top"><b>・更新・設定作業：</b><span class="price">10,000円／時</span></div>
+          <p>既存機能の修正・調整等</p>
+        </div>
+        <div class="addon">
+          <div class="addon-top"><b>・技術作業：</b><span class="price">20,000円／時</span></div>
+          <p>開発、障害対応、構成変更等</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="link-rows reveal" style="background:#fff">
+      <a class="link-row" href="https://science-web.tokyo/2026hoshu.form/" target="_blank" rel="noopener">
+        <span class="lr-label">ご案内　保守管理は、</span>
+        <span class="lr-act">仕様書サンプル<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+
+    <div class="cta-center reveal">
+      <a href="#contact" class="btn-navy">
+        <svg viewBox="0 0 24 24"><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z" fill="none"/></svg>まずは相談する
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 今すぐ / なぜ選ばれるのか -->
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Why Science Web</p>
+      <h2 class="sec-title">今すぐ使える、なぜ選ばれるのか。</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <h4><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>選ばれる理由</h4>
+        <div class="why-item"><b>・大学紀要に特化</b><span>一般企業向けとは別設計です。</span></div>
+        <div class="why-item"><b>・外部サーバー</b><span>大学サーバーや既存サーバーへの移設にも対応できます。</span></div>
+      </div>
+      <div class="why-card reveal">
+        <h4><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>よくある失敗は、</h4>
+        <div class="why-item"><b>・担当者交代</b><span>誰も触れません。</span></div>
+        <div class="why-item"><b>・外注先の選定</b><span>運用できない設計も。</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 実績 -->
+<section id="works" class="bg-mist">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Track Record</p>
+      <h2 class="sec-title">その実績は、</h2>
+    </div>
+    <div class="works-list">
+      <div class="work-row reveal">
+        <div class="wr-cat"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>学会</div>
+        <div class="wr-names">応用物理学会、国際会計研究学会、静電気学会、畜産学会、中部森林学会、日本分光学会、ほか</div>
+      </div>
+      <div class="work-row reveal">
+        <div class="wr-cat"><svg viewBox="0 0 24 24"><path d="M3 21h18M6 21V11M10 21V11M14 21V11M18 21V11M4 11h16L12 4z"/></svg>国立研究開発法人</div>
+        <div class="wr-names">産業技術総合研究所、物質・材料研究機構、JAXA、ほか</div>
+      </div>
+      <div class="work-row reveal">
+        <div class="wr-cat"><svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5zM6 12v5c0 1 2.7 3 6 3s6-2 6-3v-5"/></svg>国立大学法人</div>
+        <div class="wr-names">東京大学、京都大学、大阪大学、東北大学、名古屋大学、北海道大学、ほか</div>
+      </div>
+    </div>
+
+    <div class="link-rows reveal" style="background:#fff;margin-top:30px">
+      <a class="link-row" href="https://science-web.tokyo/ronbun/2026request.form/" target="_blank" rel="noopener">
+        <span class="lr-label">概算見積書ご希望は</span>
+        <span class="lr-act">ダウンロード（SWT見積書）<svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg></span>
+      </a>
+      <a class="link-row" href="https://science-web.tokyo/ronbun/2026order.form/" target="_blank" rel="noopener">
+        <span class="lr-label">ご発注依頼フォームは</span>
+        <span class="lr-act">仕様書の確認（SWT発注依頼）<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+
+    <div class="cta-center reveal">
+      <a href="#contact" class="btn-navy">
+        <svg viewBox="0 0 24 24"><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z" fill="none"/></svg>まずは相談する
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 会社案内 -->
+<section id="company">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Company</p>
+      <h2 class="sec-title">会社案内は、</h2>
+    </div>
+    <div class="company-grid">
+      <div class="info-card reveal">
+        <p class="ic-label">制作企業</p>
+        <h4 class="mincho">サイエンスウェブ株式会社</h4>
+        <a class="line" href="https://www.science-web.co.jp/" target="_blank" rel="noopener">https://www.science-web.co.jp/</a>
+        <p>つくば市二の宮</p>
+        <a class="line" href="mailto:science-mail@science-web.tokyo">science-mail@science-web.tokyo</a>
+      </div>
+      <div class="info-card reveal">
+        <p class="ic-label">代表取締役</p>
+        <h4 class="mincho">丹野篤美</h4>
+        <p>1975年、茨城県ひたちなか市生まれ。大学で物理学を専攻。独立ソフトウェア会社（HITACHI系）勤務し、IT専門知識と経験を積む。2007年8月7日、科学技術の街　茨城県つくば市にて創業。Webサイト制作やWebシステム開発と運営管理を多数推進しました。研究者の事業を幅広くサポートしています。</p>
+      </div>
+      <div class="info-card span2 reveal">
+        <p class="ic-label">業務内容</p>
+        <div class="biz-cols">
+          <div>
+            <h5>制作　Webサイト</h5>
+            <ul>
+              <li><a href="https://science-web.co.jp/lab.trial/" target="_blank" rel="noopener"><b>研究室</b>　５万円</a></li>
+              <li><a href="https://science-web.co.jp/20lab/" target="_blank" rel="noopener"><b>研究室</b>　20万円</a></li>
+              <li><a href="https://science-web.co.jp/gakkai/" target="_blank" rel="noopener"><b>学会</b>　　20万円</a></li>
+              <li><a href="https://science-web.co.jp/science" target="_blank" rel="noopener"><b>研究費</b>　20万円</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5>開発　Webアプリ</h5>
+            <ul>
+              <li><a href="https://science-web.tokyo/ronbun.trial/" target="_blank" rel="noopener"><b>論文投稿</b>　５万円</a></li>
+              <li><a href="https://science-web.tokyo/ronbun/" target="_blank" rel="noopener"><b>論文投稿</b>　20万円</a></li>
+              <li><a href="https://science-web.tokyo/senkyo/" target="_blank" rel="noopener"><b>役員選挙</b>　20万円</a></li>
+              <li><a href="https://science-web.tokyo/jimu/" target="_blank" rel="noopener"><b>学会事務</b>　20万円</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5>開発　会議開催サポート</h5>
+            <ul>
+              <li><a href="https://science-web.online/30venue/" target="_blank" rel="noopener"><b>フォーム</b>　30万円</a></li>
+              <li><a href="https://science-web.online/40venue/" target="_blank" rel="noopener"><b>開催案内</b>　40万円</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow contact-eyebrow">Contact</p>
+      <h2 class="sec-title">学会運営を止めない、システム開発を。</h2>
+    </div>
+
+    <div class="sys-banner reveal">
+      <b>学会運営を止めないシステム開発は、</b>
+      <a href="https://science-web.tokyo/2026sys/" target="_blank" rel="noopener">
+        https://science-web.tokyo/2026sys/<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <span class="cc-ico">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.29 21 3 13.71 3 4.5c0-.55.45-1 1-1H7.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.23 1.01L6.6 10.8z"/></svg>
+        </span>
+        <div>
+          <small>電話ご相談は、</small>
+          <a href="tel:050-3538-7006" class="cc-main">050 3538 7006</a>
+          <p class="cc-sub">平日10時〜16時</p>
+        </div>
+      </div>
+      <div class="contact-card reveal">
+        <span class="cc-ico">
+          <svg viewBox="0 0 24 24"><path d="M2 6h20v12H2z" fill="none"/><path d="M22 6l-10 7L2 6"/></svg>
+        </span>
+        <div>
+          <small>ご相談メールは、</small>
+          <a href="mailto:science-mail@science-web.tokyo" class="cc-main mail">science-mail@science-web.tokyo</a>
+          <p class="cc-sub">フロント　山本菜々</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span class="f-logo">サイエンスウェブ株式会社</span>
+    <span>大学・紀要／論文管理　スタンダードプラン｜つくば市二の宮</span>
+  </div>
+</footer>
+
+<script>
+// header scroll state
+const header=document.getElementById('header');
+window.addEventListener('scroll',()=>{header.classList.toggle('scrolled',window.scrollY>40)},{passive:true});
+
+// mobile nav
+const tg=document.getElementById('navToggle'),nav=document.getElementById('nav');
+const setNav=open=>{
+  tg.classList.toggle('active',open);
+  nav.classList.toggle('open',open);
+  tg.setAttribute('aria-expanded',String(open));
+  tg.setAttribute('aria-label',open?'メニューを閉じる':'メニューを開く');
+};
+tg.addEventListener('click',()=>setNav(!nav.classList.contains('open')));
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setNav(false)));
+window.addEventListener('resize',()=>{if(window.innerWidth>768)setNav(false)});
+
+// gentle reveal
+const ob=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ob.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>ob.observe(el));
+</script>
+</body>
+</html>
