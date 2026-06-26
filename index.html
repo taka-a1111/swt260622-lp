@@ -417,6 +417,21 @@ body{font-family:'Shippori Mincho',serif}
 .why-card.appeal h4 svg{stroke:var(--blue)}
 .why-card.appeal .why-item b{color:var(--navy)}
 .why-card.appeal .why-item span{color:#3f4b59}
+
+/* ===== 2回目修正 overrides ===== */
+/* (1) ヘッダーの帯を常に白に（ロゴが浮かないように／スクロール時も同様） */
+.site-header{background:rgba(255,255,255,.97)!important;backdrop-filter:blur(8px);border-bottom:1px solid var(--line)!important;box-shadow:0 1px 0 rgba(21,49,91,.05)}
+.logo{background:none!important;padding:0!important;color:var(--navy)!important}
+.nav a{color:var(--slate)!important}
+.nav a:hover{color:var(--blue)!important}
+.nav-toggle span{background:var(--navy)}
+/* (3) ヒーローのキャッチ行を全部ゴシックで目立たせる */
+.hero-price{font-family:'Noto Sans JP',sans-serif!important;font-weight:700;font-size:1.1rem;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26)}
+.hero-price b{font-family:'Noto Sans JP',sans-serif!important}
+/* (6) 会社名（フッター）をゴシックで強調 */
+.f-logo{font-family:'Noto Sans JP',sans-serif!important;font-weight:700}
+/* モバイルメニュー内リンクは白を維持（ヘッダー白化の上書き対策） */
+@media(max-width:768px){.nav a{color:#E8EEF6!important}.nav a:hover{color:#fff!important}}
 </style>
 </head>
 <body>
@@ -454,7 +469,6 @@ body{font-family:'Shippori Mincho',serif}
         <span class="plan-badge">迅速３週間納品</span>
         <span class="plan-badge">低予算</span>
         <span class="plan-badge">スマホ対応</span>
-        <span style="color:#A8C0E0;font-size:.9rem">サイエンスウェブ株式会社</span>
       </div>
       <ul class="hero-feats">
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>明確な仕様・単一価格</li>
@@ -702,26 +716,26 @@ body{font-family:'Shippori Mincho',serif}
           <div>
             <h5>制作　Webサイト</h5>
             <ul>
-              <li><a href="https://science-web.co.jp/lab.trial/" target="_blank" rel="noopener"><b>研究室</b>　50,000円</a></li>
-              <li><a href="https://science-web.co.jp/20lab/" target="_blank" rel="noopener"><b>研究室</b>　200,000円</a></li>
-              <li><a href="https://science-web.co.jp/gakkai/" target="_blank" rel="noopener"><b>学会</b>　　200,000円</a></li>
-              <li><a href="https://science-web.co.jp/science" target="_blank" rel="noopener"><b>研究費</b>　200,000円</a></li>
+              <li><a href="https://science-web.co.jp/lab.trial/" target="_blank" rel="noopener"><b>研究室</b>　5万円（ベーシックプラン）</a></li>
+              <li><a href="https://science-web.co.jp/20lab/" target="_blank" rel="noopener"><b>研究室</b>　20万円（スタンダードプラン）</a></li>
+              <li><a href="https://science-web.co.jp/gakkai/" target="_blank" rel="noopener"><b>学会</b>　　20万円</a></li>
+              <li><a href="https://science-web.co.jp/science" target="_blank" rel="noopener"><b>研究費</b>　20万円</a></li>
             </ul>
           </div>
           <div>
             <h5>開発　Webアプリ</h5>
             <ul>
-              <li><a href="https://science-web.tokyo/ronbun.trial/" target="_blank" rel="noopener"><b>論文投稿</b>　50,000円</a></li>
-              <li><a href="https://science-web.tokyo/ronbun/" target="_blank" rel="noopener"><b>論文投稿</b>　200,000円</a></li>
-              <li><a href="https://science-web.tokyo/senkyo/" target="_blank" rel="noopener"><b>役員選挙</b>　200,000円</a></li>
-              <li><a href="https://science-web.tokyo/jimu/" target="_blank" rel="noopener"><b>学会事務</b>　200,000円</a></li>
+              <li><a href="https://science-web.tokyo/ronbun.trial/" target="_blank" rel="noopener"><b>論文投稿</b>　5万円（ベーシックプラン）</a></li>
+              <li><a href="https://science-web.tokyo/ronbun/" target="_blank" rel="noopener"><b>論文投稿</b>　20万円（スタンダードプラン）</a></li>
+              <li><a href="https://science-web.tokyo/senkyo/" target="_blank" rel="noopener"><b>役員選挙</b>　20万円</a></li>
+              <li><a href="https://science-web.tokyo/jimu/" target="_blank" rel="noopener"><b>学会事務</b>　20万円</a></li>
             </ul>
           </div>
           <div>
             <h5>開発　会議開催サポート</h5>
             <ul>
-              <li><a href="https://science-web.online/30venue/" target="_blank" rel="noopener"><b>フォーム</b>　300,000円</a></li>
-              <li><a href="https://science-web.online/40venue/" target="_blank" rel="noopener"><b>開催案内</b>　400,000円</a></li>
+              <li><a href="https://science-web.online/30venue/" target="_blank" rel="noopener"><b>フォーム</b>　30万円</a></li>
+              <li><a href="https://science-web.online/40venue/" target="_blank" rel="noopener"><b>開催案内</b>　40万円</a></li>
             </ul>
           </div>
         </div>
